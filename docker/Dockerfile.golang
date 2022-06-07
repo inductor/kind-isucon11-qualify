@@ -21,6 +21,7 @@ COPY isucon11-qualify/webapp/NoImage.jpg ../
 COPY isucon11-qualify/webapp/ec256-public.pem ../
 COPY isucon11-qualify/webapp/public ../public/
 COPY isucon11-qualify/webapp/sql ../sql/
+ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/1_InitData.sql ../sql/
 
 COPY --from=build-env /isucon/app/isucondition .
 

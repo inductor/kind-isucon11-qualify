@@ -10,46 +10,17 @@ spec:
   template:
     spec:
       restartPolicy: Never
-      initContainers:
-        - name: fetch-json
-          image: busybox
-          command:
-            - "sh"
-            - "-c"
-            - "wget -P /tmp https://github.com/isucon/isucon11-qualify/releases/download/public/initialize.json"
-          resources:
-            limits:
-              cpu: "100m"
-              memory: 50Mi
-          volumeMounts:
-            - mountPath: /tmp
-              name: init-volume
-        - name: fetch-images
-          image: busybox
-          command:
-            - "sh"
-            - "-c"
-            - "wget -P /tmp https://github.com/isucon/isucon11-qualify/releases/download/public/images.tgz"
-          resources:
-          resources:
-            limits:
-              cpu: "100m"
-              memory: 50Mi
-          volumeMounts:
-            - mountPath: /tmp
-              name: init-volume
       containers:
         - name: bench
           image: ghcr.io/inductor/isucondition-bench:latest
           command:
             - "/isucon11-qualify/bench/bench"
+            - "--target=isucondition.isucon-app:3000"
             - "--exit-status"
           volumeMounts:
             - mountPath: /isucon11-qualify/bench/data
               name: init-volume
           env:
-            - name: ISUXBENCH_TARGET
-              value: "isucondition.isucon-app:3000"
             - name: ISUXBENCH_ALL_ADDRESSES
               value: "isucondition.isucon-app"
             - name: JIA_SERVICE_URL
@@ -58,6 +29,3 @@ spec:
             limits:
               cpu: "4000m"
               memory: 8Gi
-      volumes:
-      - name: init-volume
-        emptyDir: {}

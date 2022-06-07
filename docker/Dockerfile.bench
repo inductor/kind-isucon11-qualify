@@ -8,4 +8,7 @@ COPY isucon11-qualify ./
 WORKDIR /isucon11-qualify/bench
 RUN make vendor
 RUN make RELEASE=1
+WORKDIR /isucon11-qualify/bench/data
+ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/images.tgz .
+ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/initialize.json .
 CMD ["bash"]
