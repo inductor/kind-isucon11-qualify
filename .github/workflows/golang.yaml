@@ -23,7 +23,6 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ env.go-version }}
-          go-version-file: 'isucon11-qualify/webapp/go/go.mod'
           cache-dependency-path: 'isucon11-qualify/webapp/go/go.sum'
           cache: true
 
