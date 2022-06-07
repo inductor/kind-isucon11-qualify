@@ -20,6 +20,7 @@ spec:
       containers:
         - name: isucondition
           image: ghcr.io/inductor/isucondition-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
+          imagePullPolicy: Always # FIXME: デバッグ用。タグ運用をするなら外しておいた方がよい。
           ports:
             - containerPort: 3000
           env:

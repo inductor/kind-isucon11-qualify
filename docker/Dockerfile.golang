@@ -12,7 +12,7 @@ COPY isucon11-qualify/webapp/go/main.go .
 RUN go build -o isucondition
 
 # Main stage
-FROM gcr.io/distroless/static
+FROM gcr.io/distroless/static:debug
 LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-golang
 
 WORKDIR /isucon/app
