@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-check-bench:
-    name: Lint and test application
+    name: Lint and test bench
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,14 +22,14 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ env.go-version }}
-          cache-dependency-path: 'isucon11-qualify/webapp/go/go.sum'
+          cache-dependency-path: 'isucon11-qualify/bench/go.sum'
           cache: true
 
       - name: Build ISUCON Go app
         run: go build
         working-directory: ./isucon11-qualify/webapp/go
   build-check-mock:
-    name: Lint and test application
+    name: Lint and test mock
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -40,7 +40,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ env.go-version }}
-          cache-dependency-path: 'isucon11-qualify/webapp/go/go.sum'
+          cache-dependency-path: 'isucon11-qualify/extra/jiaapi-mock/go.sum'
           cache: true
 
       - name: Build ISUCON Go app
