@@ -2,6 +2,7 @@ name: CI
 on: 
   push:
     paths:
+      - '.github/workflows/golang.yaml'
       - 'isucon11-qualify/webapp/go/**'
       - 'docker/Dockerfile.golang'
 
@@ -20,9 +21,9 @@ jobs:
           submodules: true
 
       - uses: actions/setup-go@v3
-        working-directory: ./isucon11-qualify/webapp/go
         with:
           go-version: ${{ env.go-version }}
+          go-version-file: 'isucon11-qualify/webapp/go/go.mod'
           cache: true
 
       - name: Build ISUCON Go app
