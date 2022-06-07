@@ -56,6 +56,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.IMAGE }}
+          flavor: |
+            latest=true
           tags: |
             type=sha,prefix=sha-,suffix=,format=short
             type=schedule,pattern={{date 'YYYYMMDD'}}
