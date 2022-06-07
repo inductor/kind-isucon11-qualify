@@ -11,19 +11,6 @@ spec:
     spec:
       restartPolicy: Never
       initContainers:
-        - name: fetch-initdb
-          image: busybox
-          command:
-            - "sh"
-            - "-c"
-            - "wget -P /tmp https://github.com/isucon/isucon11-qualify/releases/download/public/1_InitData.sql"
-          resources:
-            limits:
-              cpu: "100m"
-              memory: 50Mi
-          volumeMounts:
-            - mountPath: /tmp
-              name: init-volume
         - name: fetch-json
           image: busybox
           command:

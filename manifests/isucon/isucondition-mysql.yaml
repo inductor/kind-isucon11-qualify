@@ -21,6 +21,12 @@ spec:
           env:
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
               value: "1"
+            - name: MYSQL_USER
+              value: "isucon"
+            - name: MYSQL_PASSWORD
+              value: "isucon"
+            - name: MYSQL_DATABASE
+              value: "isucondition"
           ports:
             - name: mysql
               containerPort: 3306

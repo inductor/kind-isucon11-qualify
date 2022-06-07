@@ -16,9 +16,14 @@ LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-g
 RUN apt-get update && apt-get install -y default-mysql-client
 
 WORKDIR /isucon/app
-ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
+# statis assets
+COPY isucon11-qualify/webapp/NoImage.jpg ../
 COPY isucon11-qualify/webapp/ec256-public.pem ../
+COPY isucon11-qualify/webapp/public ../public/
 COPY isucon11-qualify/webapp/sql ../sql/
+
 COPY --from=build-env /isucon/app/isucondition .
+
+ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
 EXPOSE 3000
 CMD ["/isucon/app/isucondition"]

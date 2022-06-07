@@ -17,6 +17,20 @@ spec:
         app: isucondition
         lang: golang
     spec:
+      initContainers:
+        - name: fetch-initdb
+          image: busybox
+          command:
+            - "sh"
+            - "-c"
+            - "wget -P /tmp https://github.com/isucon/isucon11-qualify/releases/download/public/1_InitData.sql"
+          resources:
+            limits:
+              cpu: "100m"
+              memory: 50Mi
+          volumeMounts:
+            - mountPath: /tmp
+              name: init-volume
       containers:
         - name: isucondition
           image: ghcr.io/inductor/isucondition-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
@@ -30,6 +44,14 @@ spec:
             limits:
               cpu: "2000m"
               memory: 4Gi
+          volumeMounts:
+            - mountPath: /isucon/sql/1_InitData.sql
+              readOnly: true
+              subPath: 1_InitData.sql
+              name: init-volume
+      volumes:
+      - name: init-volume
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
