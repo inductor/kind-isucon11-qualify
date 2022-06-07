@@ -13,4 +13,5 @@ RUN mkdir images &&\
     curl -sL https://github.com/isucon/isucon11-qualify/releases/download/public/images.tgz \
     | tar zx -C images  --strip-components 1
 ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/initialize.json .
+WORKDIR /isucon11-qualify/bench
 CMD ["bash"]
