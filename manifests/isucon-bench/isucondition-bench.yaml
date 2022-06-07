@@ -18,8 +18,12 @@ spec:
           - "--exit-status"
         env:
           - name: ISUXBENCH_TARGET
-            value: "isucondition-golang.isucon-app:3000"
+            value: "isucondition.isucon-app:3000"
           - name: ISUXBENCH_ALL_ADDRESSES
-            value: "isucondition-golang.isucon-app"
+            value: "isucondition.isucon-app"
           - name: JIA_SERVICE_URL
             value: "http://isucondition-jiaapi-mock:5000"
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4Gi

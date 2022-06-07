@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: isucondition-golang
+  name: isucondition
   labels:
     app: isucondition
     lang: golang
@@ -18,7 +18,7 @@ spec:
         lang: golang
     spec:
       containers:
-        - name: isucondition-golang
+        - name: isucondition
           image: docker pull ghcr.io/inductor/isucondition-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
           ports:
             - containerPort: 3000
@@ -33,11 +33,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: isucondition-golang
+  name: isucondition
 spec:
   type: ClusterIP
   ports:
-    - name: isucondition-golang
+    - name: isucondition
       port: 3000
   selector:
     app: isucondition
