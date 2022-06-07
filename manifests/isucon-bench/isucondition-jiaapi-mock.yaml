@@ -16,7 +16,18 @@ spec:
     spec:
       containers:
         - name: jiaapi-mock
-          image: docker pull ghcr.io/inductor/isucondition-jiaapi-mock:latest
+          image: ghcr.io/inductor/isucondition-jiaapi-mock:latest
           ports:
           - containerPort: 5000
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jiaapi-mock
+spec:
+  type: ClusterIP
+  ports:
+    - name: jiaapi-mock
+      port: 3000
+  selector:
+    app: jiaapi-mock

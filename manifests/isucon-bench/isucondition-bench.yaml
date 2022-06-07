@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: bench
-        image: docker pull ghcr.io/inductor/isucondition-bench:latest
+        image: ghcr.io/inductor/isucondition-bench:latest
         command:
           - "/isucon11-qualify/bench/bench"
           - "--exit-status"
@@ -22,7 +22,7 @@ spec:
           - name: ISUXBENCH_ALL_ADDRESSES
             value: "isucondition.isucon-app"
           - name: JIA_SERVICE_URL
-            value: "http://isucondition-jiaapi-mock:5000"
+            value: "http://isucondition-jiaapi-mock.mock:5000"
         resources:
           limits:
             cpu: 2000m
