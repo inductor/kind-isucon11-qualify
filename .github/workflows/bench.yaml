@@ -10,7 +10,25 @@ env:
   go-version: 1.16.5
 
 jobs:
-  build-check:
+  build-check-bench:
+    name: Lint and test application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.go-version }}
+          cache-dependency-path: 'isucon11-qualify/webapp/go/go.sum'
+          cache: true
+
+      - name: Build ISUCON Go app
+        run: go build
+        working-directory: ./isucon11-qualify/webapp/go
+  build-check-mock:
     name: Lint and test application
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +48,7 @@ jobs:
         working-directory: ./isucon11-qualify/webapp/go
   build-bench-image:
     name: Build docker image (and publish on master)
-    needs: [build-check]
+    needs: [build-check-bench]
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
@@ -64,7 +82,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v3
         with:
-          file: ./docker/Dockerfile.golang
+          file: ./docker/Dockerfile.bench
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -74,7 +92,7 @@ jobs:
 
   build-mock-image:
     name: Build docker image (and publish on master)
-    needs: [build-check]
+    needs: [build-check-mock]
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
@@ -108,7 +126,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v3
         with:
-          file: ./docker/Dockerfile.golang
+          file: ./docker/Dockerfile.jiaapi-mock
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
