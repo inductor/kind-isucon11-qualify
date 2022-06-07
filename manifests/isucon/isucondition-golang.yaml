@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: isucondition
-          image: docker pull ghcr.io/inductor/isucondition-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
+          image: ghcr.io/inductor/isucondition-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
           ports:
             - containerPort: 3000
           env:

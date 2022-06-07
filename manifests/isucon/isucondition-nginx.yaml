@@ -20,27 +20,36 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - mountPath: /etc/nginx
+            - mountPath: /etc/nginx/nginx.conf
               readOnly: true
-              name: nginx-config
+              subPath: nginx.conf
+              name: nginx-conf
+            - mountPath: /etc/nginx/sites-enabled/isucondition.conf
+              readOnly: true
+              subPath: isucondition.conf
+              name: isucondition-conf
           resources:
             limits:
               cpu: 2000m
               memory: 4Gi
       volumes:
-        - name: nginx-config
+        - name: nginx-conf
           configMap: 
-            name: nginx-config
+            name: nginx-conf
             items:
               - key: nginx.conf
                 path: nginx.conf
+        - name: isucondition-conf
+          configMap: 
+            name: isucondition-conf
+            items:
               - key: isucondition.conf
-                path: sites-available/isucondition.conf
+                path: isucondition.conf
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-config
+  name: nginx-conf
 data:
   nginx.conf: |
     user  www-data;
@@ -75,6 +84,12 @@ data:
       include /etc/nginx/conf.d/*.conf;
       include /etc/nginx/sites-enabled/*.conf;
     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: isucondition-conf
+data:
   isucondition.conf: |
     # server {
     #   listen 443 ssl http2;
