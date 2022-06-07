@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql
+  name: isucondition-mysql
 spec:
   selector:
     matchLabels:
@@ -207,7 +207,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: isucondition-mysql
   labels:
     app: isucondition
     database: mysql
