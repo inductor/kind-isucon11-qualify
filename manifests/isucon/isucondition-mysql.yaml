@@ -16,51 +16,51 @@ spec:
         database: mysql
     spec:
       containers:
-      - name: mysql
-        image: mariadb:10.5.2 # 開催当時のstableバージョン
-        env:
-        - name: MYSQL_ALLOW_EMPTY_PASSWORD
-          value: "1"
-        ports:
         - name: mysql
-          containerPort: 3306
-        volumeMounts:
-        - name: data
-          mountPath: /var/lib/mysql
-          subPath: mysql
-        - name: conf
-          mountPath: /etc/mysql/conf.d
-        resources:
-          limits:
-            cpu: 2000m
-            memory: 4Gi
-        livenessProbe:
-          exec:
-            command: ["mysqladmin", "ping"]
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-        readinessProbe:
-          exec:
-            # Check we can execute queries over TCP (skip-networking is off).
-            command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
-          initialDelaySeconds: 5
-          periodSeconds: 2
-          timeoutSeconds: 1
+          image: mariadb:10.5.2 # 開催当時のstableバージョン
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "1"
+          ports:
+            - name: mysql
+              containerPort: 3306
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+              subPath: mysql
+            - name: conf
+              mountPath: /etc/mysql/conf.d
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "ping"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              # Check we can execute queries over TCP (skip-networking is off).
+              command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 1
       volumes:
-      - name: conf
-        emptyDir: {}
-      - name: config-map
-        configMap:
-          name: mysql
+        - name: conf
+          emptyDir: {}
+        - name: config-map
+          configMap:
+            name: mysql
   volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 10Gi
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -213,8 +213,8 @@ metadata:
     database: mysql
 spec:
   ports:
-  - name: mysql
-    port: 3306
+    - name: mysql
+      port: 3306
   selector:
     app: isucondition
     database: mysql

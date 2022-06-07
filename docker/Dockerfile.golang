@@ -18,6 +18,7 @@ LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-g
 WORKDIR /isucon/app
 ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
 COPY isucon11-qualify/webapp/ec256-public.pem ../
+COPY isucon11-qualify/webapp/sql ../sql/
 COPY --from=build-env /isucon/app/isucondition .
 EXPOSE 3000
 CMD ["/isucon/app/isucondition"]
