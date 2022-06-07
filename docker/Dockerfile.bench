@@ -9,6 +9,8 @@ WORKDIR /isucon11-qualify/bench
 RUN make vendor
 RUN make RELEASE=1
 WORKDIR /isucon11-qualify/bench/data
-ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/images.tgz .
+RUN mkdir images &&\
+    curl -sL https://github.com/isucon/isucon11-qualify/releases/download/public/images.tgz \
+    | tar zx -C images  --strip-components 1
 ADD --link https://github.com/isucon/isucon11-qualify/releases/download/public/initialize.json .
 CMD ["bash"]

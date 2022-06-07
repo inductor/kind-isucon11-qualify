@@ -13,13 +13,11 @@ spec:
       containers:
         - name: bench
           image: ghcr.io/inductor/isucondition-bench:latest
+          imagePullPolicy: Always # FIXME: デバッグ用。タグ運用をするなら外しておいた方がよい。
           command:
             - "/isucon11-qualify/bench/bench"
             - "--target=isucondition.isucon-app:3000"
             - "--exit-status"
-          volumeMounts:
-            - mountPath: /isucon11-qualify/bench/data
-              name: init-volume
           env:
             - name: ISUXBENCH_ALL_ADDRESSES
               value: "isucondition.isucon-app"
