@@ -2,16 +2,16 @@ name: Benchmarker
 on: 
   push:
     paths:
-      - '.github/workflows/bench.yaml'
-      - 'docker/Dockerfile.bench'
+      - '.github/workflows/mock.yaml'
+      - 'docker/Dockerfile.jiaapi-mock'
 
 env:
-  IMAGE_NAME: ghcr.io/inductor/isucondition-bench
+  IMAGE_NAME: ghcr.io/inductor/isucondition-jiaapi-mock
   go-version: 1.16.5
 
 jobs:
   build-check:
-    name: Lint and test bench
+    name: Lint and test mock
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,12 +22,12 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ env.go-version }}
-          cache-dependency-path: 'isucon11-qualify/bench/go.sum'
+          cache-dependency-path: 'isucon11-qualify/extra/jiaapi-mock/go.sum'
           cache: true
 
       - name: Build ISUCON Go app
         run: go build
-        working-directory: ./isucon11-qualify/bench
+        working-directory: ./isucon11-qualify/extra/jiaapi-mock
 
   build-image:
     name: Build docker image (and publish on master)
@@ -65,7 +65,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v3
         with:
-          file: ./docker/Dockerfile.bench
+          file: ./docker/Dockerfile.jiaapi-mock
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
