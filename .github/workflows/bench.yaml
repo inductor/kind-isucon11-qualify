@@ -4,9 +4,10 @@ on:
     paths:
       - '.github/workflows/bench.yaml'
       - 'docker/Dockerfile.bench'
+      - 'isucon11-qualify/bench/**'
 
 env:
-  IMAGE_NAME: ghcr.io/inductor/isucondition-bench
+  IMAGE: ghcr.io/inductor/isucondition-bench
   go-version: 1.16.5
 
 jobs:
@@ -54,7 +55,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE }}
           flavor: |
             latest=true
           tags: |

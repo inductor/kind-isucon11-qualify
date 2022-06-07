@@ -3,8 +3,8 @@ on:
   push:
     paths:
       - '.github/workflows/golang.yaml'
-      - 'isucon11-qualify/webapp/go/**'
       - 'docker/Dockerfile.golang'
+      - 'isucon11-qualify/webapp/go/**'
 
 env:
   IMAGE: ghcr.io/inductor/isucondition-golang
