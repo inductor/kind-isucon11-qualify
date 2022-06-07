@@ -1,0 +1,20 @@
+# build stage
+FROM golang:1.16.5 as builder
+## init setting
+WORKDIR /isucon11-qualify/extra/jiaapi-mock/
+## download packages
+COPY isucon11-qualify/extra/jiaapi-mock/go.mod isucon11-qualify/extra/jiaapi-mock/go.sum ./
+COPY isucon11-qualify/bench/random /bench/random
+RUN go mod download
+## build
+COPY isucon11-qualify/extra/jiaapi-mock/ ./
+RUN GOOS=linux make
+
+# run stage
+FROM gcr.io/distroless/base
+LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-jiaapi-mock
+## copy binary
+COPY --from=builder /isucon11-qualify/extra/jiaapi-mock/jiaapi-mock .
+EXPOSE 5000
+## Run
+ENTRYPOINT ["./jiaapi-mock"]

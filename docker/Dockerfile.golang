@@ -13,7 +13,7 @@ RUN go build -o isucondition
 
 # Main stage
 FROM gcr.io/distroless/static
-LABEL org.opencontainers.image.source=https://github.com/inductor/isucon-golang
+LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-golang
 
 WORKDIR /isucon/app
 ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000

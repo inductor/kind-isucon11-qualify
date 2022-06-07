@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isucondition-jiaapi-mock
+  labels:
+    app: jiaapi-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jiaapi-mock
+  template:
+    metadata:
+      labels:
+        app: jiaapi-mock
+    spec:
+      containers:
+        - name: jiaapi-mock
+          image: docker pull ghcr.io/inductor/isucondition-jiaapi-mock:latest
+          ports:
+          - containerPort: 5000
+---

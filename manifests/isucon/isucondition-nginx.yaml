@@ -16,9 +16,13 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:1.22.0
+          image: nginx:1.18.0 # 開催当時の(おそらく)stable
           ports:
-          - containerPort: 80
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 4Gi
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -67,7 +71,7 @@ data:
 
     #   location / {
     #     proxy_set_header Host $http_host;
-    #     proxy_pass http://127.0.0.1:3000;
+    #     proxy_pass http://isucondition-golang:3000;
     #   }
     # }
     server {
@@ -75,7 +79,7 @@ data:
 
       location / {
         proxy_set_header Host $http_host;
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://isucondition-golang:3000;
       }
     }
 ---

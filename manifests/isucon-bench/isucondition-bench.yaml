@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: isucondition-bench
+  namespace: isucon-bench
+  labels:
+    app: bench
+spec:
+  completions: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: bench
+        image: docker pull ghcr.io/inductor/isucondition-bench:latest
+        command:
+          - "/isucon11-qualify/bench/bench"
+          - "--exit-status"
+        env:
+          - name: ISUXBENCH_TARGET
+            value: "isucondition-golang.isucon-app:3000"
+          - name: ISUXBENCH_ALL_ADDRESSES
+            value: "isucondition-golang.isucon-app"
+          - name: JIA_SERVICE_URL
+            value: "http://isucondition-jiaapi-mock:5000"
