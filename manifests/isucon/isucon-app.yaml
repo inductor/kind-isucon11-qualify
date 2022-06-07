@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
         - name: isucondition-golang
-          image: nginx:1.22.0
+          image: docker pull ghcr.io/inductor/isucon-golang:latest # FIXME: 実際に競技を再現したい場合はタグを変更しましょう
           ports:
           - containerPort: 80
