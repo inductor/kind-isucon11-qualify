@@ -1,4 +1,3 @@
-# CGOを使わないので、alpineでも生成されるバイナリに問題は無い
 FROM golang:1.16.5-buster as build-env
 ENV CGO_ENABLED=0
 
@@ -14,6 +13,7 @@ RUN go build -o isucondition
 # Main stage
 FROM debian:buster-slim
 LABEL org.opencontainers.image.source=https://github.com/inductor/isucondition-golang
+RUN apt-get update && apt-get install -y default-mysql-client
 
 WORKDIR /isucon/app
 ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
