@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: rq-isucon
+spec:
+  hard:
+    # ISUCONの競技マシンを仮想的に2C/4GB * 3として計算
+    cpu: "6000m"
+    memory: 12Gi

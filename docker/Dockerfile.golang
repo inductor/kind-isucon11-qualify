@@ -1,0 +1,23 @@
+# CGOを使わないので、alpineでも生成されるバイナリに問題は無い
+FROM golang:1.16.5-alpine as build-env
+ENV CGO_ENABLED=0
+
+WORKDIR /isucon/app
+COPY isucon11-qualify/webapp/go/go.mod isucon11-qualify/webapp/go/go.sum ./
+
+RUN go mod download
+
+COPY isucon11-qualify/webapp/go/main.go .
+
+RUN go build -o isucondition
+
+# Main stage
+FROM gcr.io/distroless/static
+LABEL org.opencontainers.image.source=https://github.com/inductor/isucon-golang
+
+WORKDIR /isucon/app
+ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
+COPY isucon11-qualify/webapp/ec256-public.pem ../
+COPY --from=build-env /isucon/app/isucondition .
+EXPOSE 3000
+CMD ["/isucon/app/isucondition"]

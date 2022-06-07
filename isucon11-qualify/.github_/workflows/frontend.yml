@@ -1,0 +1,76 @@
+name: frontend
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - webapp/frontend/**/*
+      - .github/workflows/frontend.yml
+  pull_request:
+    paths:
+      - webapp/frontend/**/*
+      - .github/workflows/frontend.yml
+
+jobs:
+  packages:
+    name: Packages
+    runs-on: self-hosted
+    timeout-minutes: 15
+    env:
+      CI: true
+    defaults:
+      run:
+        working-directory: webapp/frontend
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+      - run: npm ci
+  build:
+    name: Build
+    runs-on: self-hosted
+    needs: [packages]
+    timeout-minutes: 15
+    env:
+      CI: true
+    defaults:
+      run:
+        working-directory: webapp/frontend
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
+  lint:
+    name: Lint
+    runs-on: self-hosted
+    needs: [packages]
+    timeout-minutes: 15
+    env:
+      CI: true
+    defaults:
+      run:
+        working-directory: webapp/frontend
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run fmt:check
+      - run: npm run lint
+  message:
+    runs-on: self-hosted
+    timeout-minutes: 15
+    steps:
+      - uses: peter-evans/create-or-update-comment@v1
+        if: ${{ github.event.action == 'opened' }}
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### webapp/frontend 更新時のチェックリスト
+
+            - [ ] `make update-assets` を実行し `webapp/public` と `bench/scenario/assets.go` の内容を更新した

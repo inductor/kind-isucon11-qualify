@@ -1,0 +1,6 @@
+[submodule "isucon"]
+	path = isucon
+	url = https://github.com/isucon/isucon11-qualify.git
+[submodule "isucon11-qualify"]
+	path = isucon11-qualify
+	url = https://github.com/isucon/isucon11-qualify.git
