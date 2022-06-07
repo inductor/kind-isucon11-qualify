@@ -53,7 +53,7 @@ spec:
             - name: ISUXBENCH_ALL_ADDRESSES
               value: "isucondition.isucon-app"
             - name: JIA_SERVICE_URL
-              value: "http://isucondition-jiaapi-mock.mock:5000"
+              value: "http://jiaapi-mock.mock:5000"
           resources:
             limits:
               cpu: "4000m"

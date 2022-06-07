@@ -24,6 +24,6 @@ COPY isucon11-qualify/webapp/sql ../sql/
 
 COPY --from=build-env /isucon/app/isucondition .
 
-ENV POST_ISUCONDITION_TARGET_BASE_URL=http://backend-go:3000
+ENV POST_ISUCONDITION_TARGET_BASE_URL=http://isucondition.isucon-app:3000
 EXPOSE 3000
 CMD ["/isucon/app/isucondition"]
