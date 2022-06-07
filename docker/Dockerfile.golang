@@ -1,5 +1,5 @@
 # CGOを使わないので、alpineでも生成されるバイナリに問題は無い
-FROM golang:1.16.5-alpine as build-env
+FROM golang:1.16.5-buster as build-env
 ENV CGO_ENABLED=0
 
 WORKDIR /isucon/app
