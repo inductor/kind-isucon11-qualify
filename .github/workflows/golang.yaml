@@ -31,7 +31,7 @@ jobs:
         working-directory: ./isucon11-qualify/webapp/go
   build-image:
     name: Build docker image (and publish on master)
-    needs: [lint-and-test]
+    needs: [build-check]
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
